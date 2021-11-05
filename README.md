@@ -33,7 +33,6 @@ First up you will need to tell the bot to add the /command to the server
         name: 'idk',
         description: 'random des',
     })
-})
 
 Then you will need to make the actual command 
 
@@ -50,4 +49,3 @@ client.on('interactionCreate', async (interaction) =>{
             ephemeral: false,
         })
     }
-})
