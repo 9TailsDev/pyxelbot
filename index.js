@@ -1,7 +1,11 @@
 const {Client, Intents} = require('discord.js')
 const dotenv = require('dotenv')
 dotenv.config()
+const prefix = process.env.PREFIX
+
+//Stuff
 const github = 'https://github.com/9TailsDev'
+const Hug = require('./anime/cuddle.json')
 
 const client = new Client({
     intents: [
@@ -10,21 +14,21 @@ const client = new Client({
     ]
 })
 
-client.on('messageCreate', (message) => {
-    if (message.content === '!ping') {
-        message.channel.send('Pong!')
-    }
+client.on('messageCreate', (msg) =>{
+    // Extreamlyy basic/Shit command handler
+    if (!msg.content.startsWith(prefix) || msg.author.bot) return;
+    const args = msg.content.slice(prefix.length).trim().split(' ');
+	const command = args.shift().toLowerCase();
+    var HugGif = 0
 
-    if (message.content === '!github') {
-        message.channel.send(github)
+    switch(command){
+        
+        case 'ping': msg.channel.send('pong'); break
+        case 'avatar': msg.channel.send(msg.author.displayAvatarURL()); break
+        case 'hug': {HugGif = Hug[Math.floor(Math.random() * Hug.length)]; msg.channel.send(HugGif); break
+        }
     }
-    if (message.content === 'avatar'){
-        message.channel.send(message.author.avatarURL())
-    }
-
 })
-
-
 
 client.login(process.env.TOKEN)
 
@@ -55,6 +59,14 @@ client.on('ready', () =>{
         name: 'prefix',
         description: 'Replies with bots prefix',
     })
+    commands?.create({
+        name: 'avatar',
+        description: 'Replies with your avatar',
+    })
+    commands?.create({
+        name: 'hug',
+        description: 'Replies with a hug gif',
+    })
 })
 
 client.on('interactionCreate', async (interaction) =>{
@@ -62,26 +74,18 @@ client.on('interactionCreate', async (interaction) =>{
         return
     }
 
-    const {commandName, options} = interaction
+    const {commandName} = interaction
 
-    if(commandName === 'ping'){
-        interaction.reply({
-            content: 'pong',
-            ephemeral: false,
-        })
-    }
-    if(commandName === 'github'){
-        interaction.reply({
-            content: (github),
-            ephemeral: false,
-        })
-    }
-    if(commandName === 'prefix'){
-        interaction.reply({
-            content: (`The prefix is \`!\``),
-            ephemeral: false,
-        })
-    }
+    switch(commandName){
+        case 'ping': interaction.reply('pong'); break
+        case 'github': interaction.reply(github); break
+        case 'prefix': interaction.reply(prefix); break
+        case 'avatar': interaction.reply(interaction.author.displayAvatarURL()); break
+        case 'hug': {const HugGif = Hug[Math.floor(Math.random() * Hug.length)]
+            interaction.reply(HugGif)
+                break
+        }
+    } 
 })
 
-///////////////////////////////////////////////////   Slash Commands)//
+///////////////////////////////////////////////////   Slash Commands
