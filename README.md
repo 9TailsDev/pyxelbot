@@ -3,7 +3,7 @@ I'm currently relearning discord.js due to v13 being a pain in the ass so yeah a
 
 <h2>Installing</h2>
 
-Anyway - Just start by typing npi to download all the packages in the package file
+Anyway - Just start by typing npm i to download all the packages in the package file
 
 ![image](https://user-images.githubusercontent.com/53715423/140474723-46439c60-2f3d-4ad1-bf11-174e3806585d.png)
 
